@@ -7,11 +7,12 @@ before_script:
   - mkdir $TRAVIS_BUILD_DIR/_neovim
   - wget -q -O - https://github.com/fwalch/neovim/releases/download/nightly/neovim-x64-nightly.tar.gz \
       | tar xzf - --strip-components=1 -C $TRAVIS_BUILD_DIR/_neovim
+  - mv $TRAVIS_BUILD_DIR/_neovim/bin/nvim.bin $TRAVIS_BUILD_DIR/_neovim/bin/nvim
   - export PATH="$TRAVIS_BUILD_DIR/_neovim/bin:$PATH"
   - sudo apt-get update -q
   - sudo apt-get install vim-gnome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script:
-  - vroom --crawl --neovim ./examples/
+  - VIM=$TRAVIS_BUILD_DIR/_neovim/share/nvim/runtime vroom --crawl --neovim ./examples/
   - vroom --crawl ./examples/
